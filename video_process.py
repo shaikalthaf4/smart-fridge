@@ -94,12 +94,12 @@ def run(args, source):
 
     # Aggregate the information
     print(track_dict)
-    track_result = [('banana', ('right', 'up', 1)), ('apple', ('right', 'up', 2))]
+    track_result = []
     for track in track_dict:
         # Decide whether this is a moving item
         change_x = abs(track_dict[track]["start_point"][0] - track_dict[track]["end_point"][0])
         change_y = abs(track_dict[track]["start_point"][1] - track_dict[track]["end_point"][1])
-        if (change_x / args.frameWidth < 0.1 and change_y / args.frameHeight < 0.1) or track_dict[track]["total_frame"] <= 10:
+        if (change_x / args.frameWidth < 0.1 and change_y / args.frameHeight < 0.1) or track_dict[track]["total_frame"] <= 4:
             continue # stationary objects
         # Obtain the object class name
         counter = 0
