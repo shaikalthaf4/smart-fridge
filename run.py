@@ -78,6 +78,9 @@ def light_sensor_simulation(arguments):
                 lock_in_analysis.release()
     except KeyboardInterrupt:  
         print ("Exiting Program")      
+    except:
+        print("Error occurs, existing program")
+    
 
 # light_sensor_simulation()
 def main():
