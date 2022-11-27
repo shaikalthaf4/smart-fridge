@@ -205,9 +205,9 @@ class OCSort(object):
 
         self.frame_count += 1
         
-        classes = clss.numpy()
-        bboxes = xyxy.numpy()
-        confs = confs.numpy()
+        classes = clss
+        bboxes = xyxy
+        confs = confs
 
         output_results = np.column_stack((bboxes, confs, classes))
         

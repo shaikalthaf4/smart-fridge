@@ -52,6 +52,7 @@ class LoadVideos:
         self.sample_stride = sample_stride          # stride for the sampling
         self.frame = 0                              # current frame index
         self.cap = cv2.VideoCapture(self.video)
+        print("Open video? ", self.cap.isOpened())
         self.frames = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     def __iter__(self):

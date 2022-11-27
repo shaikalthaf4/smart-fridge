@@ -5,3 +5,5 @@ tflite-support>=0.4.2
 protobuf>=3.18.0,<4
 
 pathlib
+
+filterpy
