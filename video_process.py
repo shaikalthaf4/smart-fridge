@@ -17,10 +17,9 @@ COLORS = np.random.randint(0, 255, size=(100, 3), dtype="uint8")
 
 import time
 
-
 def run(args, source):
-    
-    time.sleep(5)
+    # Sleep for few seconds 
+    time.sleep(10)
     # Create the object detection model
     base_options = core.BaseOptions(file_name=args.model, num_threads=args.numThreads)
     detection_options = processor.DetectionOptions(max_results=10, score_threshold=0.5)
@@ -36,7 +35,6 @@ def run(args, source):
     # Initialize the item level arrays and track-item info dictionary
     levels = []
     track_dict = {}
-    print(len(dataset))
 
     for batch_idx, (path, imgs, vid_cap, s) in enumerate(dataset):
         for frame_idx, img in enumerate(imgs):
@@ -77,13 +75,13 @@ def run(args, source):
                         else:
                             track_dict[id]["class_counter"][name] += 1
             else:
-                print('No detections')
+                pass
+                # print('No detections')
             # Write to the video
             im0 = annotator.result()
             if vid_path is None:  # new video
                 num_videos = len(glob.glob(args.output_folder+'/*.mp4'))
                 vid_path = args.output_folder + f"/output{num_videos+1}.mp4"
-                print(vid_path)
                 if vid_cap:  # video
                     fps = vid_cap.get(cv2.CAP_PROP_FPS)
                     w = im0.shape[1]

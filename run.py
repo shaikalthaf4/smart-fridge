@@ -27,7 +27,6 @@ def capture_video(lock, args):
     global light
     vid_capture = cv2.VideoCapture(0)
     vid_writer = cv2.VideoWriter(get_video_name(args.save_folder), cv2.VideoWriter_fourcc(*'mp4v'), 30, (args.frameWidth, args.frameHeight))
-    print(vid_capture.isOpened())
     while(vid_capture.isOpened()):
         ret, frame = vid_capture.read()
         if ret==True:
@@ -46,7 +45,7 @@ def capture_video(lock, args):
 def analyze_video(lock, args, source):
     global in_analysis
     print("The source is: ", source)
-    video_process_2.run(args, source)
+    video_process.run(args, source)
     print("Finish running video analysis......")
     lock.acquire()
     in_analysis = False
@@ -83,7 +82,7 @@ def light_sensor_simulation(arguments):
 # light_sensor_simulation()
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--model', help='Path of the object detection model.', required=False, default='models/fruit-large.tflite')
+    parser.add_argument('--model', help='Path of the object detection model.', required=False, default='models/model.tflite')
     parser.add_argument('--cameraId', help='Id of camera.', required=False, type=int, default=0)
     parser.add_argument('--frameWidth', help='Width of frame to capture from camera.', required=False, type=int, default=640)
     parser.add_argument('--frameHeight', help='Height of frame to capture from camera.', required=False, type=int, default=480)
@@ -98,6 +97,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# print(get_analysis_video_name('videos'))
  
