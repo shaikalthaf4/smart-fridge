@@ -99,7 +99,7 @@ def run(args, source):
         # Decide whether this is a moving item
         change_x = abs(track_dict[track]["start_point"][0] - track_dict[track]["end_point"][0])
         change_y = abs(track_dict[track]["start_point"][1] - track_dict[track]["end_point"][1])
-        if (change_x / args.frameWidth < 0.1 and change_y / args.frameHeight < 0.1) or track_dict[track]["total_frame"] <= 4:
+        if (change_x / args.frameWidth < 0.1 and change_y / args.frameHeight < 0.1) or track_dict[track]["total_frame"] <= 3:
             continue # stationary objects
         # Obtain the object class name
         counter = 0
@@ -124,7 +124,7 @@ def run(args, source):
             if floor_counter[lvl] > counter:
                 counter = floor_counter[lvl]
                 item_level = lvl
-        track_result.append((class_name, (horizontal, vertical, item_level)))
+        track_result.append((class_name.lower(), (horizontal, vertical, item_level)))
     print(track_result)
     os.remove(source)
     change_items(track_result)

@@ -5,12 +5,12 @@ import datetime
 
 # Item expiration look-up-table
 expire_table = {
-    "Apple": 30,
-    "Banana": 5,
-    "Orange": 20,
-    "Tomato": 10,
-    "Green Pepper": 10,
-    "Broccoli": 12
+    "apple": 30,
+    "banana": 5,
+    "orange": 20,
+    "tomato": 10,
+    "green pepper": 10,
+    "broccoli": 12
 }
 IN = 1
 OUT = -1
