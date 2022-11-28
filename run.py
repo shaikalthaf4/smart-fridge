@@ -7,6 +7,7 @@ import glob
 import argparse
 import threading
 import video_process
+from utils.server import run_server
 ON, OFF = 1, -1
 video_id = 0
 light = OFF
@@ -92,9 +93,15 @@ def main():
     parser.add_argument('--numThreads', help='Number of CPU threads to run the model.', required=False, type=int, default=4)
     parser.add_argument('--stride', help='Stride when processing the video', required=False, type=int, default=1)
     parser.add_argument('--batchsize', help='Batchsize when processing the video', required=False, type=int, default=8)
-    parser.add_argument('--save-folder', help='Path to save the video', required=False, default='videos')
-    parser.add_argument('--output-folder', help='Path to save the video', required=False, default='output')
+    parser.add_argument('--save-folder', help='Path to save the captured video', required=False, default='videos')
+    parser.add_argument('--output-folder', help='Path to save the processed output video', required=False, default='output')
+    parser.add_argument('--ip-address', help='IP address of your raspberry Pi', required=False, default='192.168.10.51')
+    parser.add_argument('--port', help='Port number of the Android app server', required=False, type=int, default=8080)
     args = parser.parse_args()
+    # Create a thread for servering the Android App
+    t_app_server = threading.Thread(target=run_server, args=(args.ip_address, args.port))
+    t_app_server.start()
+    # Main thread: check the light sensor
     light_sensor_simulation(args)
 
 
