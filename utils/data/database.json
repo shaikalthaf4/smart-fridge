@@ -1,1 +1,1 @@
-[]
+[{"type": "banana", "in_time": "2022-11-25", "expire_dates": 5, "level": 1, "status": -1}, {"type": "orange", "in_time": "2022-11-30", "expire_dates": 20, "level": 2, "status": 1}, {"type": "apple", "in_time": "2022-11-30", "expire_dates": 30, "level": 1, "status": 1}, {"type": "banana", "in_time": "2022-11-30", "expire_dates": 5, "level": 1, "status": 1}]

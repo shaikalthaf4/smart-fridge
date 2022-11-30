@@ -2,7 +2,6 @@
 import json 
 import datetime
 
-
 # Item expiration look-up-table
 expire_table = {
     "apple": 30,
@@ -28,12 +27,13 @@ def get_direction(item_info):
     else:
         return OUT
 
-def add_item(item, item_list):
+def add_item(item, item_list, status=1):
     item_formated = {
         "type": item[0],
         "in_time": str(datetime.datetime.now().date()),
         "expire_dates": expire_table[item[0]],
-        "level": item[1][2]
+        "level": item[1][2],
+        "status": status
     }
     item_list.append(item_formated)
 
@@ -69,17 +69,6 @@ def change_items(item_list, database_path=DATABASE):
     with open(database_path, "w") as fp:
         json.dump(data, fp)
         print("Save the updated item lists back to the database")
-        
-
-# Test code 1 -- add/remove items to/from the database:
-# item_list = [
-#     ('banana', ('right', 'up', 1)),
-#     ('orange', ('right', 'up', 2)),
-#     ('apple',  ('right', 'up', 1)),
-#     ('banana', ('right', 'up', 1))
-# ]
-
-# change_items(item_list)
 
 
 def daily_check(database_path=DATABASE):
@@ -94,17 +83,17 @@ def daily_check(database_path=DATABASE):
     reminder_list = {}
     with open(database_path, "r") as fp:
         data = json.load(fp)
-    for item in data:
-        if (datetime.datetime.now()-datetime.datetime.strptime(item["in_time"], "%Y-%m-%d")).days / item["expire_dates"] >= 0.8:
-            if item["level"] in reminder_list:
-                reminder_list[item["level"]].append(item["type"])
-            else:
-                reminder_list[item["level"]] = [item["type"]]
-    return reminder_list
-
-
-# Test code 2 --- check the reminder list
-# print(daily_check())
+    for idx, item in enumerate(data):
+        ratio = (datetime.datetime.now()-datetime.datetime.strptime(item["in_time"], "%Y-%m-%d")).days / item["expire_dates"]
+        if ratio >= 0.7:
+            item['status'] = -1
+            data[idx] = item
+        elif ratio >= 0.55:
+            item['status'] = 0
+            data[idx] = item
+    with open(database_path, "w") as fp:
+        json.dump(data, fp)
+        print("Save the updated item lists back to the database")
 
 
 def check_with_sensor_data(sensor_data, database_path=DATABASE):
@@ -113,3 +102,20 @@ def check_with_sensor_data(sensor_data, database_path=DATABASE):
         data = json.load(fp)
     # TODO: combine the sensor_data and data to generate reminder_list
     return reminder_list
+
+
+
+# Test code 1 -- add/remove items to/from the database:
+# item_list = [
+#     ('banana', ('right', 'up', 1)),
+#     ('orange', ('right', 'up', 2)),
+#     ('apple',  ('right', 'up', 1)),
+#     ('banana', ('right', 'up', 1))
+# ]
+
+# change_items(item_list, 'data/database.json')
+
+
+
+# Test code 2 --- check the reminder list
+# daily_check('data/database.json')
