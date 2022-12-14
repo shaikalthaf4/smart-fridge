@@ -1,4 +1,4 @@
-# SmartFridge
+# FreshIO: Smart Fridge Prototype
 
 ## Configure the Enviornment
 Update packages on your raspberry Pi OS
@@ -39,7 +39,19 @@ Install the dependencies
 ```
 pip install -r requirements.txt
 ```
-Download the trained detection model from [this link](https://drive.google.com/file/d/1Cy8NWsV4fdJhDaV_MI3B06O7aaSgD7fE/view?usp=share_link), and save it into the `models` folder as `models/model.tflite`.
+
+## Download Trained Models
+For this project, we have trained 5 different food detection models of various sizes. We start from EfficientDet-LiteX object detection models pretrained on COCO dataset, and fine-tune them on a custom food dataset. For detailed information of the custom data set and the fine-tuning process, please refer to this repository. The following table lists the detailed information of the fine-tuned models as well as the corresponding download links.
+
+| Models             | AP    | AP50  | AP75  | Size   |
+|--------------------|-------|-------|-------|--------|
+| [EfficientDet-Lite0](https://drive.google.com/file/d/1U_H1PA00m9cZJfpr018TNLx6190MA43D/view?usp=sharing) | 54.00 | 75.03 | 66.02 | 4.24MB |
+| [EfficientDet-Lite1](https://drive.google.com/file/d/1fTjnSW6K7JSbjZSKKfhJJ2BIv-JWFNoM/view?usp=sharing) | 55.83 | 75.11 | 62.77 | 5.66MB |
+| [EfficientDet-Lite2](https://drive.google.com/file/d/1aYQkU1r-Pqgi5W8O9ZAv7Fh3dAtwhhFp/view?usp=sharing) | 66.46 | 82.66 | 77.15 | 7.05MB |
+| [EfficientDet-Lite3](https://drive.google.com/file/d/16Isz62Jy4u5VlfmEHU2hgFv--c5o7J7B/view?usp=sharing) | 81.36 | 96.23 | 89.70 | 11.1MB |
+| [EfficientDet-Lite4](https://drive.google.com/file/d/1Os3VKh_Ho-76pTy6atoyrIZjXGJpwRse/view?usp=sharing) | 79.41 | 94.30 | 84.23 | 19.6MB |
+
+Download the your preferred trained detection model from its link, and save it into the `models` folder as `models/model.tflite`.
 
 Run the code
 ```
