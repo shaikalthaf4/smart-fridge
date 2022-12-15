@@ -53,6 +53,14 @@ For this project, we have trained 5 different food detection models of various s
 
 Download the your preferred trained detection model from its link, and save it into the `models` folder as `models/model.tflite`.
 
+## Find Suitable Parameter Values
+For the landmard-based(LB)-localization algorithm, you need to set up suitable parameter values for your own fridge. To do this, you can run the follow command. Specifically, the localization is based on the greyscale of the landmarks, so you need to find a suitable greyscale threshold ```GREY_THRESH``` for you own fridge, and usually the value lies in the range between ```30``` and ```50```. You need to find a value so that you can see the bounding boxes like the images below. For ```LEVEL```, it is the number of levels of your fridge. For my fridge below, the value of ```LEVEL``` should be set to 3. 
+
+```
+python utils/localize.py --grey-thresh GREY_THRESH --level LEVEL
+```
+
+
 Run the code
 ```
 python run.py
