@@ -41,7 +41,7 @@ pip install -r requirements.txt
 ```
 
 ## Download Trained Models
-For this project, we have trained 5 different food detection models of various sizes. We start from EfficientDet-LiteX object detection models pretrained on COCO dataset, and fine-tune them on a custom food dataset. For detailed information of the custom data set and the fine-tuning process, please refer to this repository. The following table lists the detailed information of the fine-tuned models as well as the corresponding download links.
+For this project, we have trained 5 different food detection models of various sizes. We start from EfficientDet-LiteX object detection models pretrained on COCO dataset, and fine-tune them on a custom food dataset. For detailed information of the custom data set and the fine-tuning process, please refer to this [repository](https://github.com/Zilinghan/food-detector). The following table lists the detailed information of the fine-tuned models as well as the corresponding download links.
 
 | Models             | AP    | AP50  | AP75  | Size   |
 |--------------------|-------|-------|-------|--------|

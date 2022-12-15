@@ -97,6 +97,8 @@ def main():
     parser.add_argument('--output-folder', help='Path to save the processed output video', required=False, default='output')
     parser.add_argument('--ip-address', help='IP address of your raspberry Pi', required=False, default='192.168.10.51')
     parser.add_argument('--port', help='Port number of the Android app server', required=False, type=int, default=8080)
+    parser.add_argument('--grey-thresh', help='Threshold for gray scale to do the landmark-based(LB)-localization', required=False, type=int, default=30)
+    parser.add_argument('--levels', nargs="+", type=int, help="y-coordinates of the levels of the fridge: used for LB-localization", required=False, default=[10, 20])
     args = parser.parse_args()
     # Create a thread for servering the Android App
     t_app_server = threading.Thread(target=run_server, args=(args.ip_address, args.port))
