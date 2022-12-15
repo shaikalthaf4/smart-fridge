@@ -38,7 +38,9 @@ def run(args, source):
 
     for batch_idx, (path, imgs, vid_cap, s) in enumerate(dataset):
         for frame_idx, img in enumerate(imgs):
-            levels.append(localize(img))
+            lvl = localize(img, args.grey_thresh, args.levels)
+            if (lvl != -1):
+                levels.append(lvl)
             annotator = Annotator(img, line_width=2)
             input_tensor = vision.TensorImage.create_from_array(img)
             # Run object detection estimation using the model.
@@ -112,18 +114,15 @@ def run(args, source):
         horizontal = "right" if track_dict[track]["end_point"][0] - track_dict[track]["start_point"][0] >= 0 else "left"
         vertical = "down" if track_dict[track]["end_point"][1] - track_dict[track]["start_point"][1] >= 0 else "up"
         # Decide the floor level
-        floor_counter = {}
+        floor_counter = [0 for i in range(len(args.levels))]
         for i in range(track_dict[track]["start_frame"], track_dict[track]["end_frame"]+1):
-            if not levels[i] in floor_counter:
-                floor_counter[levels[i]] = 1
-            else:
-                floor_counter[levels[i]] += 1
+            floor_counter[levels[i]] += 1
         counter = 0
         item_level = None
-        for lvl in floor_counter:
-            if floor_counter[lvl] > counter:
-                counter = floor_counter[lvl]
+        for lvl in range(len(floor_counter)):
+            if floor_counter[lvl] / (track_dict[track]["end_frame"]+1-track_dict[track]["start_frame"]) > 0.1:
                 item_level = lvl
+                break
         track_result.append((class_name.lower(), (horizontal, vertical, item_level)))
     print(track_result)
     os.remove(source)

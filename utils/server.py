@@ -29,8 +29,5 @@ class GP(BaseHTTPRequestHandler):
         self.wfile.write("<html><body><h1>POST Request Received!</h1></body></html>")
 
 def run_server(IP_address, port):
-    # ip address of the server, use ifconfig or ipconfig command to get ip
-    # IP_address = '192.168.10.51'
-    # port = 8080
     httpd = HTTPServer((IP_address, port), GP)
     httpd.serve_forever()

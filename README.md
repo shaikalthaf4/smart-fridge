@@ -1,5 +1,7 @@
 # FreshIO: Smart Fridge Prototype
 
+<img src='results/demo.gif' width='600'/>
+
 ## Configure the Enviornment
 Update packages on your raspberry Pi OS
 ```
@@ -60,8 +62,28 @@ For the landmard-based(LB)-localization algorithm, you need to set up suitable p
 python utils/localize.py --grey-thresh GREY_THRESH --level LEVEL
 ```
 
+<img src="results/LB-localize.png" width="400"/> 
 
-Run the code
+After tuning suitable ```GREY_THRESH``` value, the program will print something like: ```Suggested level values are [52, 140, 248]```. 
+
+
+## Run the Code
+To run the code, you need to specify at least the following three 
 ```
-python run.py
+python run.py --ip-address IP_ADDRESS --grey-thresh GREY_THRESH --levels LEVLES
 ```
+
+```IP_ADDRESS``` refers to the IP of your raspberryPi, and you can run ```ifconfig``` of ```ipconfig``` to get the IP of the raspberryPi.  ```GREY_THRESH``` is the greyscale threshold you find in the previous section. For ```LEVELS```, you can use the out suggested values. One example of running the code is:
+
+```
+python run.py --ip-address 192.168.10.51 --grey-thresh 30 --levels 52 140 248
+```
+
+## What the Code Does
+Currently, the code is only composed of the video analysis module and the server for the Android App, it does not integrate with sensor data. When you run the code, you are asked to input either 0 or 1 to simulate the light sensor behavior. When user inputs 1, the camera starts recording, otherwise, the recording stops. The video analysis and server parts are running in separate threads. The codes for our developed Android app can be found in [Shilan's repo](https://github.com/ShellyRiver/SmartFridge_AndroidAPP).
+
+## [Video Demo](https://youtu.be/CpEttU46jFI)
+
+
+## Discussions and Future Work
+Currently, though we have all sensor part codes available, we have not combined them with other parts and test them in the real settings. As for the video analysis module, the main limitation is the lack of training data, and the model is not sufficiently accurate. I believe that more training samples with make this smart fridge prototype more practical in the future. 
