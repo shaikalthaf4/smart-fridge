@@ -1,7 +1,4 @@
 # Gas sensor data for FreshIO
-'''
-  @Shaik Althaf V. Shajihan {sav4@illinois.edu}
-'''
 
 #Run 30 mins after fridge door opens/closes - and cycle at user specified frequency - like, every 4 hours
 # STEPS
@@ -20,9 +17,10 @@
         --- change_gas_avg = 50-100% : gas_weigh = 0.5
         --- change_gas_avg = 100-200% : gas_weigh = 0.7
         --- change_gas_avg = >200% : gas_weigh = 1.0
-2. Check if expiry table available for an item
+2. Check if expiry table available for an item based vision acquired data on items in fridge
     - if YES,
         expiry_weigh = remaining_dates/Estiamted_exiry  
+3. Combine both the weights
 '''
 
 import matplotlib.pyplot as plt
@@ -32,22 +30,7 @@ import sys
 sys.path.append('../')
 import time
 import csv
-
-'''!
-  @file demo_read_voltage.py
-  @brief connect ADS1115 I2C interface with your board (please reference board compatibility)
-  @n  The voltage value read by A0 A1 A2 A3 is printed through the serial port.
-  @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-  @license     The MIT License (MIT)
-  @author [luoyufeng](yufeng.luo@dfrobot.com)
-  @version  V1.0
-  @date  2019-06-19
-  @url https://github.com/DFRobot/DFRobot_ADS1115
-'''
-
 # Bosch AI gas sensor
-
-
 from bme68x import BME68X
 import bme68xConstants as cnst
 import bsecConstants as bsec
@@ -56,8 +39,6 @@ from time import sleep
 
 bme = BME68X(cnst.BME68X_I2C_ADDR_LOW, 0)
 bme.set_sample_rate(bsec.BSEC_SAMPLE_RATE_LP)
-
-print("sample rate:", bsec.BSEC_SAMPLE_RATE_LP)
 
 
 def get_data(sensor):
@@ -74,13 +55,8 @@ def get_data(sensor):
         sleep(1)
         return data
 
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-import numpy as np
 #from datetime import *
-
 # READ and plot Gas sensors data
-
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from DFRobot_ADS1115 import ADS1115
 ADS1115_REG_CONFIG_PGA_6_144V        = 0x00 # 6.144V range = Gain 2/3
@@ -134,7 +110,6 @@ ads1115.set_gain(ADS1115_REG_CONFIG_PGA_6_144V)
 # This function is called periodically from FuncAnimation
 def animate(i, ys0,ys1,ys2,ys3):
     
-
     #Get the Digital Value of Analog of selected channel
     adc0 = ads1115.read_voltage(0)
     time.sleep(0.2)
@@ -190,8 +165,6 @@ ani = animation.FuncAnimation(fig,
 plt.show()
 
 #########################
-
-
 
 dateconv = lambda s: datetime.strptime(s, "%H:%M:%S")
 col_names = ["T", "V"]
