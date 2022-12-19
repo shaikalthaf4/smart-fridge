@@ -2,6 +2,8 @@
 
 <img src='results/demo.gif' width='600'/>
 
+## [Video Demo](https://youtu.be/CpEttU46jFI)
+
 ## Configure the Enviornment
 Update packages on your raspberry Pi OS
 ```
@@ -81,8 +83,6 @@ python run.py --ip-address 192.168.10.51 --grey-thresh 30 --levels 52 140 248
 
 ## What the Code Does
 Currently, the code is only composed of the video analysis module and the server for the Android App, it does not integrate with sensor data. When you run the code, you are asked to input either 0 or 1 to simulate the light sensor behavior. When user inputs 1, the camera starts recording, otherwise, the recording stops. The video analysis and server parts are running in separate threads. The codes for our developed Android app can be found in [Shilan's repo](https://github.com/ShellyRiver/SmartFridge_AndroidAPP).
-
-## [Video Demo](https://youtu.be/CpEttU46jFI)
 
 
 ## Discussions and Future Work
